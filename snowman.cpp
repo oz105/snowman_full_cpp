@@ -36,9 +36,8 @@ namespace ariel {
             throw std::out_of_range{"Invalid code '" + to_string(num)+"'"};
         }
         if(check_digits(num) == 0) {
-            throw std::invalid_argument{ "num can only contains the digits 1-4 " + to_string(num)} ;
+            throw std::out_of_range{ "num can only contains the digits 1-4 " + to_string(num)} ;
         }
-        std::string res ="";
         std::array<std::string,4> hats = {" _===_" , "  ___\n ....." , "   _\n  /_\\" , "  ___\n (_*_)"} ;
         std::array<std::string,4> noses = {",",".","_"," "} ;
         std::array<std::string,4> left_eye = {".","o","O","-"} ;
@@ -59,38 +58,33 @@ namespace ariel {
         if(digits[right_arm] == '2'){
             right = 1 ; // 1 means the arm is up 
         }
-        //cout << "left arm " << digits[left_arm] << endl ;
-        //cout << "right arm " << digits[right_arm] << endl ;
-        //cout<<"left " << left << endl ;
-        //cout<<"right " << right << endl ;
-
-        res.append(hats[(digits[hat]-'1')]+"\n") ;
-
+        std:: string res = hats.at(digits.at(hat)-'1')+"\n" ;
 
         if(left == 1 && right == 1){
-            res.append(left_arm_up[1]+"("+(left_eye[(digits[l_eye]-'1')])+noses[digits[nose]-'1'] + right_eye[digits[r_eye]-'1']+")"+right_arm_up[1]+"\n"
-            +" ("+torso[digits[torso_num]-'1']+")\n"+ " ("+base[digits[base_num]-'1']+")\n");
-
+            res.append(left_arm_up[1]+"("+left_eye.at(digits.at(l_eye)-'1')+noses.at(digits.at(nose)-'1') + right_eye.at(digits.at(r_eye)-'1')+")"+right_arm_up[1]+"\n"
+            +" ("+torso.at(digits.at(torso_num)-'1')+")\n"+ " ("+base.at(digits.at(base_num)-'1')+")\n");
         }
+
         else if(left == 1 && right == 0){
-            res = res + (left_arm_up[1]+"("+(left_eye[(digits[l_eye]-'1')])+noses[digits[nose]-'1']+right_eye[digits[r_eye]-'1']+")\n")
-            +" ("+torso[digits[torso_num]-'1']+")"+right_arm_low[digits[right_arm]-'1']+"\n"
-            +" ("+base[digits[base_num]-'1']+")\n";
-        }
-        else if(left == 0 && right == 1){
-            res.append(" ("+(left_eye[(digits[l_eye]-'1')]+noses[digits[nose]-'1'] + right_eye[digits[r_eye]-'1']+")"+right_arm_up[1]+"\n")
-             +left_arm_low[digits[left_arm]-'1']+"("+torso[digits[torso_num]-'1']+")\n"
-             +" ("+base[digits[base_num]-'1']+")\n");
-        }
-        else if (left == 0 && right == 0){
-            res.append(" ("+(left_eye[(digits[l_eye]-'1')]+noses[digits[nose]-'1'] + right_eye[digits[r_eye]-'1']+")\n")
-            +left_arm_low[digits[left_arm]-'1']+"("+torso[digits[torso_num]-'1']+")"+right_arm_low[digits[right_arm]-'1']+"\n"
-            +" ("+base[digits[base_num]-'1']+")\n");
+            res.append(left_arm_up[1]+"("+left_eye.at(digits.at(l_eye)-'1')+noses.at(digits.at(nose)-'1')+right_eye.at(digits.at(r_eye)-'1')+")\n"
+            +" ("+torso.at(digits.at(torso_num)-'1')+")"+right_arm_low.at(digits.at(right_arm)-'1')+"\n"
+            +" ("+base.at(digits.at(base_num)-'1')+")\n");
         }
 
-        return res;
-        //return "none";
+        else if(left == 0 && right == 1){
+            res.append(" ("+left_eye.at(digits.at(l_eye)-'1')+noses.at(digits.at(nose)-'1') + right_eye.at(digits.at(r_eye)-'1')+")"+right_arm_up[1]+"\n"
+             +left_arm_low.at(digits.at(left_arm)-'1')+"("+torso.at(digits.at(torso_num)-'1')+")\n"
+             +" ("+base.at(digits.at(base_num)-'1')+")\n");
+        }
+
+        else if (left == 0 && right == 0){
+            res.append(" ("+left_eye.at(digits.at(l_eye)-'1')+noses.at(digits.at(nose)-'1') + right_eye.at(digits.at(r_eye)-'1')+")\n"
+            +left_arm_low.at(digits.at(left_arm)-'1')+"("+torso.at(digits.at(torso_num)-'1')+")"+right_arm_low.at(digits.at(right_arm)-'1')+"\n"
+            +" ("+base.at(digits.at(base_num)-'1')+")\n");
+        }
+
+        return res; 
 
 
     }
-} 
+}
